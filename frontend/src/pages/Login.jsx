@@ -120,6 +120,7 @@ export default function Login() {
           {/* Recuperar senha */}
           <button
             type="button"
+            onClick={() => navigate('/forgot-password')}
             className="w-full h-14 rounded-xl border border-violet-500 text-violet-600 font-semibold hover:bg-violet-50 transition"
           >
             Recuperar senha
