@@ -18,8 +18,12 @@ export default function ForgotPassword() {
     setLoading(true)
     setMessage('')
 
+    const redirectUrl = import.meta.env.DEV
+  ? 'http://localhost:5173/update-password'
+  : 'https://gapselling-platform.vercel.app/update-password'
+
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:5173/update-password',
+    redirectTo: redirectUrl,
     })
 
     if (error) {
