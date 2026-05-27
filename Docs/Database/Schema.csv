@@ -1,0 +1,44 @@
+table_name,column_name,data_type
+academies,id,uuid
+academies,name,text
+academies,slug,text
+academies,logo_url,text
+academies,website,text
+academies,phone,text
+academies,address,text
+academies,created_at,timestamp without time zone
+campaigns,id,uuid
+campaigns,academy_id,uuid
+campaigns,name,text
+campaigns,description,text
+campaigns,tag,text
+campaigns,ai_prompt,text
+campaigns,active,boolean
+campaigns,created_at,timestamp without time zone
+leads,id,uuid
+leads,academy_id,uuid
+leads,name,text
+leads,phone,text
+leads,email,text
+leads,status,text
+leads,stage,text
+leads,source,text
+leads,created_at,timestamp without time zone
+leads,campaign_id,uuid
+leads,tag,text
+profiles,id,uuid
+profiles,user_id,uuid
+profiles,login_name,text
+profiles,email,text
+profiles,gym_name,text
+profiles,address,text
+profiles,phone,text
+profiles,created_at,timestamp with time zone
+profiles,academy_id,uuid
+whatsapp_instances,id,uuid
+whatsapp_instances,academy_id,uuid
+whatsapp_instances,instance_name,text
+whatsapp_instances,phone,text
+whatsapp_instances,status,text
+whatsapp_instances,qr_code,text
+whatsapp_instances,created_at,timestamp without time zone

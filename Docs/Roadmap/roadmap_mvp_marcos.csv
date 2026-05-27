@@ -1,0 +1,7 @@
+Nome,Data,Marco,Fase relacionada,Prioridade,Status,Entregável chave
+M0 — Fundação,2026-06-02,M0,F0 — Fundação,Crítica,Não iniciada,Backend + RLS + tenant bootstrap
+M1 — Academia viva,2026-06-09,M1,F1 — Academia & Dashboard,Crítica,Não iniciada,Perfil comercial + dashboard real
+M2 — Operação manual,2026-06-16,M2,F2 — Leads & CRM,Crítica,Não iniciada,Leads + CRM Kanban
+M3 — Automação core,2026-06-30,M3,F3 — WhatsApp & Campanhas,Crítica,Não iniciada,WhatsApp + campanha n8n funcionando
+M4 — IA operacional,2026-07-07,M4,F4 — Chat IA,Alta,Não iniciada,Chat IA + supervisão humana
+M5 — MVP Launch,2026-07-17,M5,F5 — Go-Live,Alta,Não iniciada,Fluxo completo + alunos + relatórios + produção

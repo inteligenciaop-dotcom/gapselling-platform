@@ -1,0 +1,12 @@
+Nome,Módulo,Fase,Prioridade,Status,Schema,Entrega principal
+Auth,Auth,F0 — Fundação,Crítica,Não iniciada,profiles,"Login, cadastro, reset senha, tenant bootstrap"
+Multi-tenant,Multi-tenant,F0 — Fundação,Crítica,Não iniciada,"academies, profiles.academy_id",RLS + middleware FastAPI
+Configuração da Academia,Academia,F1 — Academia & Dashboard,Crítica,Não iniciada,"academies, academy_profiles (nova)",CRUD perfil comercial + tom IA
+Dashboard,Dashboard,F1 — Academia & Dashboard,Crítica,Não iniciada,agregações,Cards e listas com dados reais
+Central de Leads,Leads,F2 — Leads & CRM,Crítica,Não iniciada,leads,"CRUD, tags, filtros, import XLSX"
+CRM,CRM,F2 — Leads & CRM,Crítica,Não iniciada,leads.stage,Kanban com 8 etapas padrão
+WhatsApp,WhatsApp,F3 — WhatsApp & Campanhas,Crítica,Não iniciada,whatsapp_instances,"Conexão, QR, status, envio/recebimento"
+Campanhas,Campanhas,F3 — WhatsApp & Campanhas,Crítica,Não iniciada,campaigns,"Scripts IA, ativação, webhook n8n"
+Chat IA,Chat IA,F4 — Chat IA,Alta,Não iniciada,"conversations, messages (novas)","Histórico, supervisão, takeover humano"
+Alunos,Alunos,F5 — Go-Live,Alta,Não iniciada,students (nova),Conversão lead → aluno
+Relatórios,Relatórios,F5 — Go-Live,Alta,Não iniciada,views/queries,Export CSV/XLSX operacional

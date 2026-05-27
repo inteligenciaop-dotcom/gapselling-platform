@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { supabase } from '../lib/supabase'
+import { getPostAuthPath, mapAuthError } from '../lib/auth'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
 
   const navigate = useNavigate()
+  const { refreshAuth } = useAuth()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,18 +24,30 @@ export default function Login() {
     setLoading(true)
     setMessage('')
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
     if (error) {
-      setMessage(error.message)
+      setMessage(mapAuthError(error.message))
       setLoading(false)
       return
     }
 
-    navigate('/dashboard')
+    try {
+      const { profile } = await refreshAuth()
+
+      if (!profile) {
+        setMessage('Perfil não encontrado. Entre em contato com o suporte.')
+        setLoading(false)
+        return
+      }
+
+      navigate(getPostAuthPath(profile))
+    } catch {
+      setMessage('Erro ao carregar perfil. Tente novamente.')
+    }
 
     setLoading(false)
   }

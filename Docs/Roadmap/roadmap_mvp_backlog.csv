@@ -1,0 +1,7 @@
+Nome,Prioridade,Status,Motivo adiamento,Fase sugerida,Módulo,Descrição
+Import Google Sheets,Média,Backlog,XLSX cobre MVP,F2+,Leads,Importação leads via Google Sheets API
+Múltiplos usuários por academia tenant_members,Média,Backlog,1 user/academia suficiente no launch,F6+,Multi-tenant,Tabela tenant_members com roles admin/operador
+IA auto-perfil website Instagram,Média,Backlog,Perfil manual funciona no launch,F4+,Academia,Análise automática website/Instagram para gerar perfil comercial
+BI avançado,Baixa,Backlog,Spec exclui BI no MVP,F6+,Relatórios,Dashboards analíticos avançados
+Supabase Realtime no chat,Baixa,Backlog,Polling suficiente no MVP,F6+,Chat IA,Atualização tempo real conversas
+Testes automatizados extensivos,Baixa,Backlog,Smoke tests manuais no go-live,F6+,Infra,Suite E2E e unit tests completa

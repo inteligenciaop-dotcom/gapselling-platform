@@ -1,27 +1,10 @@
 import { Navigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
 
-import { supabase } from '../lib/supabase'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function ProtectedRoute({ children }) {
 
-  const [loading, setLoading] = useState(true)
-  const [session, setSession] = useState(null)
-
-  useEffect(() => {
-
-    async function checkSession() {
-
-      const { data } = await supabase.auth.getSession()
-
-      setSession(data.session)
-
-      setLoading(false)
-    }
-
-    checkSession()
-
-  }, [])
+  const { loading, session } = useAuth()
 
   if (loading) {
     return (
@@ -32,7 +15,7 @@ export default function ProtectedRoute({ children }) {
   }
 
   if (!session) {
-    return <Navigate to="/" />
+    return <Navigate to="/" replace />
   }
 
   return children
