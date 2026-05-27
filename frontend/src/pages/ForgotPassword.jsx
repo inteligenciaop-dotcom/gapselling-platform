@@ -4,6 +4,18 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import logo from '../assets/logo.png'
 
+function getAppUrl() {
+  if (import.meta.env.VITE_APP_URL) {
+    return import.meta.env.VITE_APP_URL.replace(/\/$/, '')
+  }
+
+  if (import.meta.env.DEV) {
+    return 'http://localhost:5173'
+  }
+
+  return window.location.origin
+}
+
 export default function ForgotPassword() {
 
   const navigate = useNavigate()
@@ -18,12 +30,10 @@ export default function ForgotPassword() {
     setLoading(true)
     setMessage('')
 
-    const redirectUrl = import.meta.env.DEV
-  ? 'http://localhost:5173/update-password'
-  : 'https://gapselling-platform.vercel.app/update-password'
+    const redirectUrl = `${getAppUrl()}/update-password`
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: redirectUrl,
+      redirectTo: redirectUrl,
     })
 
     if (error) {
