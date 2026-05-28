@@ -1,11 +1,11 @@
-import logo from '../assets/logo.png'
+import logo from '../../assets/logo.png'
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { supabase } from '../lib/supabase'
-import { getPostAuthPath, mapAuthError } from '../lib/auth'
-import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../../services/supabase'
+import { getPostAuthPath, mapAuthError } from '../../services/auth'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function Login() {
 

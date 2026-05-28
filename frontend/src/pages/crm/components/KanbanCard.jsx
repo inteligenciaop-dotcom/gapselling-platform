@@ -1,4 +1,4 @@
-import { LEAD_STAGES } from '../../lib/leads'
+import { LEAD_STAGES } from '../../../services/leads'
 
 export default function KanbanCard({
   lead,

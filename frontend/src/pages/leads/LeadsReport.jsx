@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import PageHeader from '../components/layout/PageHeader'
-import LeadReportPreview from '../components/leads/LeadReportPreview'
-import { useAuth } from '../contexts/AuthContext'
+import PageHeader from '../../components/layout/PageHeader'
+import LeadReportPreview from '../../components/leads/LeadReportPreview'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   buildReportData,
   downloadLeadsReportPdf,
   downloadLeadsReportXlsx,
   emptyReportFilters,
-} from '../lib/leadReport'
-import { fetchLeads, LEAD_STAGES, LEAD_STATUS_OPTIONS } from '../lib/leads'
+} from '../../services/leadReport'
+import { fetchLeads, LEAD_STAGES, LEAD_STATUS_OPTIONS } from '../../services/leads'
 
 const inputClass =
   'w-full h-11 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'

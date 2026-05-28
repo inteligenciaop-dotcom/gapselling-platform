@@ -1,4 +1,4 @@
-import PageHeader from '../components/layout/PageHeader'
+import PageHeader from '../../components/layout/PageHeader'
 
 function StatCard({ label, value, iconBg, iconColor, icon, badgeBg, badgeIcon }) {
   return (

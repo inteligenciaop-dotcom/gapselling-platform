@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import PageHeader from '../components/layout/PageHeader'
-import { useAuth } from '../contexts/AuthContext'
+import PageHeader from '../../components/layout/PageHeader'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   fetchUserAccount,
   formatAccountDate,
   updateUserAccount,
   updateUserPassword,
-} from '../lib/user'
+} from '../../services/user'
 
 const inputClass =
   'w-full h-12 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'

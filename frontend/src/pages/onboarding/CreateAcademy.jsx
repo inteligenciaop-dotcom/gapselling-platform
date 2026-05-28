@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
-import { useAuth, waitForAcademyLink } from '../contexts/AuthContext'
-import { slugify } from '../lib/slug'
-import logo from '../assets/logo.png'
+import { supabase } from '../../services/supabase'
+import { useAuth, waitForAcademyLink } from '../../contexts/AuthContext'
+import { slugify } from '../../utils/slug'
+import logo from '../../assets/logo.png'
 
 const inputClass =
   'w-full h-14 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'

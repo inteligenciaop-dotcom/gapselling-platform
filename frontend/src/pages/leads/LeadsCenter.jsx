@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import PageHeader from '../components/layout/PageHeader'
-import { useAuth } from '../contexts/AuthContext'
-import { downloadLeadImportTemplate, parseLeadSpreadsheet } from '../lib/leadImport'
+import PageHeader from '../../components/layout/PageHeader'
+import Modal from '../../components/ui/Modal'
+import { useAuth } from '../../contexts/AuthContext'
+import { downloadLeadImportTemplate, parseLeadSpreadsheet } from '../../services/leadImport'
 import {
   createLead,
   DEFAULT_LEAD_STAGE,
@@ -15,7 +16,7 @@ import {
   LEAD_STATUS_OPTIONS,
   matchesLeadSearch,
   updateLead,
-} from '../lib/leads'
+} from '../../services/leads'
 
 const inputClass =
   'w-full h-11 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'
@@ -38,26 +39,6 @@ const emptyEditForm = {
   stage: DEFAULT_LEAD_STAGE,
   source: '',
   tag: '',
-}
-
-function Modal({ title, children, onClose }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
-      <div className="w-full max-w-lg bg-white rounded-3xl border border-zinc-100 shadow-xl p-6 max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-zinc-900">{title}</h3>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-zinc-400 hover:text-zinc-600 text-2xl leading-none"
-          >
-            ×
-          </button>
-        </div>
-        {children}
-      </div>
-    </div>
-  )
 }
 
 export default function LeadsCenter() {

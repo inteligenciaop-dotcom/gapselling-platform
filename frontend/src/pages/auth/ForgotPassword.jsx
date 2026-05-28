@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { mapAuthError } from '../lib/auth'
-import { supabase } from '../lib/supabase'
-import logo from '../assets/logo.png'
+import { mapAuthError } from '../../services/auth'
+import { supabase } from '../../services/supabase'
+import logo from '../../assets/logo.png'
 
 const RESEND_COOLDOWN_SECONDS = 5
 

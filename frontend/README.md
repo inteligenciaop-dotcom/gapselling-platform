@@ -1,16 +1,61 @@
-# React + Vite
+# GapSelling — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SPA React (Vite + Tailwind) da plataforma GapSelling.
 
-Currently, two official plugins are available:
+## Estrutura de pastas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+frontend/src/
+├── pages/                 # Telas, agrupadas por domínio
+│   ├── auth/                # Login, registro, recuperação de senha
+│   ├── onboarding/          # Criação da academia
+│   ├── dashboard/           # Dashboard e placeholders
+│   ├── academy/             # Configurações da academia
+│   ├── leads/               # Central de leads e relatórios
+│   ├── crm/                 # Kanban CRM (+ components/)
+│   └── system/              # Usuários e configurações
+├── components/
+│   ├── layout/              # AppLayout, Sidebar, PageHeader
+│   ├── ui/                  # Componentes reutilizáveis (Modal, etc.)
+│   ├── leads/               # Componentes específicos de leads
+│   └── icons/
+├── services/                # Camada de dados (Supabase, exportações)
+├── utils/                   # Funções puras (slug, formatação)
+├── contexts/                # Estado global (AuthContext)
+└── config/                  # Navegação, constantes de UI
+```
 
-## React Compiler
+### Convenções
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Pasta | Uso |
+|-------|-----|
+| `pages/` | Uma rota principal por arquivo; subpastas por módulo de negócio |
+| `services/` | Chamadas à API/banco; sem JSX |
+| `components/` | UI reutilizável; preferir `ui/` para genéricos |
+| `utils/` | Helpers sem dependência de React ou Supabase |
 
-## Expanding the ESLint configuration
+Quando o backend FastAPI existir, adicionar `services/api.js` como cliente HTTP e migrar gradualmente os `services/*.js` off Supabase direct.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Desenvolvimento
+
+```bash
+cp .env.example .env
+npm install
+npm run dev
+```
+
+## Variáveis de ambiente
+
+| Variável | Descrição |
+|----------|-----------|
+| `VITE_SUPABASE_URL` | URL do projeto Supabase |
+| `VITE_SUPABASE_ANON_KEY` | Chave anon (pública) |
+| `VITE_APP_URL` | URL de produção (links de e-mail) |
+
+## Build
+
+```bash
+npm run build    # saída em dist/
+```
+
+Deploy via Vercel — ver [README.md](../README.md) na raiz do monorepo.

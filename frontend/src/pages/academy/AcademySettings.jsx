@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
-import PageHeader from '../components/layout/PageHeader'
-import AcademyAvatar from '../components/layout/AcademyAvatar'
-import { useAuth } from '../contexts/AuthContext'
+import PageHeader from '../../components/layout/PageHeader'
+import AcademyAvatar from '../../components/layout/AcademyAvatar'
+import { useAuth } from '../../contexts/AuthContext'
 import {
   fetchAcademySettings,
   updateAcademySettings,
   uploadAcademyLogo,
-} from '../lib/academy'
+} from '../../services/academy'
 
 const inputClass =
   'w-full h-12 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'

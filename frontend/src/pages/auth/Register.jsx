@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
-import { mapAuthError } from '../lib/auth'
-import { useAuth } from '../contexts/AuthContext'
-import logo from '../assets/logo.png'
+import { supabase } from '../../services/supabase'
+import { mapAuthError } from '../../services/auth'
+import { useAuth } from '../../contexts/AuthContext'
+import logo from '../../assets/logo.png'
 
 const inputClass =
   'w-full h-14 px-4 rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-violet-500'
