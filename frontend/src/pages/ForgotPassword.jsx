@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { mapAuthError } from '../lib/auth'
 import { supabase } from '../lib/supabase'
 import logo from '../assets/logo.png'
+
+const RESEND_COOLDOWN_SECONDS = 5
 
 function getAppUrl() {
   if (import.meta.env.VITE_APP_URL) {
@@ -22,13 +25,32 @@ export default function ForgotPassword() {
 
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
+  const [isError, setIsError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [cooldown, setCooldown] = useState(0)
+
+  useEffect(() => {
+    if (cooldown <= 0) {
+      return undefined
+    }
+
+    const timer = setInterval(() => {
+      setCooldown((current) => Math.max(0, current - 1))
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [cooldown])
 
   async function handleRecover(e) {
     e.preventDefault()
 
+    if (cooldown > 0) {
+      return
+    }
+
     setLoading(true)
     setMessage('')
+    setIsError(false)
 
     const redirectUrl = `${getAppUrl()}/update-password`
 
@@ -36,14 +58,17 @@ export default function ForgotPassword() {
       redirectTo: redirectUrl,
     })
 
+    setCooldown(RESEND_COOLDOWN_SECONDS)
+
     if (error) {
-      setMessage(error.message)
+      setMessage(mapAuthError(error.message))
+      setIsError(true)
       setLoading(false)
       return
     }
 
-    setMessage('E-mail de recuperação enviado!')
-
+    setMessage('E-mail de recuperação enviado! Verifique sua caixa de entrada.')
+    setIsError(false)
     setLoading(false)
   }
 
@@ -86,10 +111,14 @@ export default function ForgotPassword() {
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full h-14 rounded-xl bg-gradient-to-r from-violet-600 to-purple-500 text-white font-semibold text-lg"
+            disabled={loading || cooldown > 0}
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-violet-600 to-purple-500 text-white font-semibold text-lg disabled:opacity-60"
           >
-            {loading ? 'Enviando...' : 'Enviar recuperação'}
+            {loading
+              ? 'Enviando...'
+              : cooldown > 0
+                ? `Aguarde ${cooldown}s para reenviar`
+                : 'Enviar recuperação'}
           </button>
 
           <button
@@ -101,7 +130,7 @@ export default function ForgotPassword() {
           </button>
 
           {message && (
-            <p className="text-center text-sm text-zinc-600">
+            <p className={`text-center text-sm ${isError ? 'text-red-500' : 'text-zinc-600'}`}>
               {message}
             </p>
           )}

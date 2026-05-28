@@ -48,7 +48,7 @@ async function loadAcademy(academyId) {
 
   const { data, error } = await supabase
     .from('academies')
-    .select('id, name, slug, logo_url')
+    .select('id, name, slug, logo_url, phone, address, website')
     .eq('id', academyId)
     .maybeSingle()
 

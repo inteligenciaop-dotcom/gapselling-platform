@@ -142,7 +142,7 @@ export default function CreateAcademy() {
 
           <div>
             <label className="block text-sm font-semibold text-zinc-700 mb-2">
-              Telefone <span className="font-normal text-zinc-400">(opcional)</span>
+              WhatsApp da academia <span className="font-normal text-zinc-400">(opcional)</span>
             </label>
             <input
               type="text"
@@ -152,6 +152,9 @@ export default function CreateAcademy() {
               onChange={handleChange}
               className={inputClass}
             />
+            <p className="text-xs text-zinc-400 mt-2">
+              Será usado na integração WhatsApp + IA. Pode preencher depois em Configurações.
+            </p>
           </div>
 
           <div>

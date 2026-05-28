@@ -1,0 +1,2 @@
+[functions.analyze-academy-profile]
+verify_jwt = true

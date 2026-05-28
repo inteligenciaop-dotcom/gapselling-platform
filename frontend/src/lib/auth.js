@@ -51,5 +51,14 @@ export function mapAuthError(message) {
     return 'Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada.'
   }
 
+  const rateLimitMatch = normalized.match(/after (\d+) seconds?/)
+  if (rateLimitMatch) {
+    return `Por segurança, aguarde ${rateLimitMatch[1]} segundos antes de solicitar novamente.`
+  }
+
+  if (normalized.includes('rate limit') || normalized.includes('too many requests')) {
+    return 'Muitas tentativas. Aguarde alguns segundos e tente novamente.'
+  }
+
   return message
 }
