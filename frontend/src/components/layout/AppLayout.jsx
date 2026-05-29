@@ -2,19 +2,20 @@ import { useEffect, useState } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 import { supabase } from '../../services/supabase'
+import { SETUP_EXEMPT_PATHS } from '../../config/navigation'
+import { AcademySetupProvider, useAcademySetup } from '../../contexts/AcademySetupContext'
 import { useAuth } from '../../contexts/AuthContext'
 import Sidebar from './Sidebar'
 
-export default function AppLayout() {
-
+function AppLayoutContent() {
   const navigate = useNavigate()
   const location = useLocation()
   const { refreshAuth } = useAuth()
+  const { loading: setupLoading, isComplete } = useAcademySetup()
   const [ready, setReady] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-
     let active = true
 
     async function init() {
@@ -37,8 +38,20 @@ export default function AppLayout() {
     return () => {
       active = false
     }
-
   }, [refreshAuth, navigate])
+
+  useEffect(() => {
+    if (!ready || setupLoading || isComplete) {
+      return
+    }
+
+    const isExemptPath = SETUP_EXEMPT_PATHS.includes(location.pathname)
+    const isDashboard = location.pathname === '/dashboard'
+
+    if (!isExemptPath && !isDashboard) {
+      navigate('/onboarding/setup', { replace: true })
+    }
+  }, [ready, setupLoading, isComplete, location.pathname, navigate])
 
   useEffect(() => {
     setMobileMenuOpen(false)
@@ -57,7 +70,7 @@ export default function AppLayout() {
     navigate('/')
   }
 
-  if (!ready) {
+  if (!ready || setupLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-50 px-4">
         Carregando...
@@ -110,5 +123,13 @@ export default function AppLayout() {
       </div>
 
     </div>
+  )
+}
+
+export default function AppLayout() {
+  return (
+    <AcademySetupProvider>
+      <AppLayoutContent />
+    </AcademySetupProvider>
   )
 }

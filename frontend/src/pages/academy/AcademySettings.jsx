@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import PageHeader from '../../components/layout/PageHeader'
 import AcademyAvatar from '../../components/layout/AcademyAvatar'
+import { useAcademySetup } from '../../contexts/AcademySetupContext'
 import { useAuth } from '../../contexts/AuthContext'
 import {
   fetchAcademySettings,
@@ -26,7 +28,9 @@ const emptyProfile = {
 
 export default function AcademySettings() {
 
+  const navigate = useNavigate()
   const { academy, refreshAuth } = useAuth()
+  const { isComplete, refreshSetupStatus } = useAcademySetup()
   const fileInputRef = useRef(null)
 
   const [loading, setLoading] = useState(true)
@@ -124,7 +128,13 @@ export default function AcademySettings() {
       })
 
       await refreshAuth()
-      setMessage('Configurações salvas com sucesso!')
+      const setupStatus = await refreshSetupStatus()
+
+      if (setupStatus?.isComplete) {
+        setMessage('Configuração concluída! Você já pode usar todas as funções da plataforma.')
+      } else {
+        setMessage('Configurações salvas. Complete os itens obrigatórios para liberar CRM, leads e campanhas.')
+      }
       setIsError(false)
     } catch (err) {
       setMessage(err.message ?? 'Erro ao salvar configurações.')
@@ -174,6 +184,24 @@ export default function AcademySettings() {
   return (
     <div>
       <PageHeader />
+
+      {!isComplete && (
+        <div className="mb-6 rounded-3xl border border-violet-200 bg-violet-50 p-5">
+          <p className="text-sm font-semibold text-violet-800">
+            Configuração obrigatória para liberar a plataforma
+          </p>
+          <p className="text-sm text-violet-700 mt-1">
+            Preencha WhatsApp, modalidades, planos, valores e tom de comunicação.
+            Esses dados alimentam a IA e as automações comerciais.
+          </p>
+          <Link
+            to="/onboarding/setup"
+            className="inline-flex mt-3 text-sm font-semibold text-violet-700 hover:text-violet-900"
+          >
+            Ver guia de configuração →
+          </Link>
+        </div>
+      )}
 
       <form
         onSubmit={handleSave}
@@ -408,6 +436,16 @@ export default function AcademySettings() {
           >
             {saving ? 'Salvando...' : 'Salvar configurações'}
           </button>
+
+          {isComplete && (
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="w-full sm:w-auto h-12 px-8 rounded-xl border border-violet-500 text-violet-600 font-semibold hover:bg-violet-50 transition"
+            >
+              Ir para o dashboard
+            </button>
+          )}
 
           {message && (
             <p className={`text-sm ${isError ? 'text-red-500' : 'text-green-600'}`}>

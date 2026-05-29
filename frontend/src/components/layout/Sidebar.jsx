@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom'
 
 import gapLogo from '../../assets/logo.png'
+import { useAcademySetup } from '../../contexts/AcademySetupContext'
 import { navigationSections } from '../../config/navigation'
 import { NavIcon } from '../icons/NavIcons'
 
-function SidebarContent({ onNavigate, showCloseButton, onClose }) {
+function SidebarContent({ onNavigate, showCloseButton, onClose, setupComplete }) {
   return (
     <>
       <div className="relative px-6 pt-6 lg:pt-8 pb-6 flex items-center justify-between border-b border-zinc-100">
@@ -32,6 +33,23 @@ function SidebarContent({ onNavigate, showCloseButton, onClose }) {
       </div>
 
       <nav className="flex-1 overflow-y-auto px-4 py-6 space-y-8">
+        {!setupComplete && (
+          <NavLink
+            to="/onboarding/setup"
+            onClick={onNavigate}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-semibold transition-colors ${
+                isActive
+                  ? 'bg-amber-100 text-amber-800'
+                  : 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+              }`
+            }
+          >
+            <span className="text-base">📋</span>
+            Guia de configuração
+          </NavLink>
+        )}
+
         {navigationSections.map((section) => (
           <div key={section.title}>
             <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-zinc-400">
@@ -39,24 +57,45 @@ function SidebarContent({ onNavigate, showCloseButton, onClose }) {
             </p>
 
             <ul className="space-y-1">
-              {section.items.map((item) => (
-                <li key={item.path}>
-                  <NavLink
-                    to={item.path}
-                    onClick={onNavigate}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${
-                        isActive
-                          ? 'bg-violet-100 text-violet-700'
-                          : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900'
-                      }`
-                    }
-                  >
-                    <NavIcon name={item.icon} />
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
+              {section.items.map((item) => {
+                const locked = item.requiresSetup && !setupComplete
+
+                if (locked) {
+                  return (
+                    <li key={item.path}>
+                      <span
+                        title="Complete a configuração da academia para acessar"
+                        className="flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium text-zinc-400 cursor-not-allowed"
+                      >
+                        <NavIcon name={item.icon} />
+                        {item.label}
+                        <span className="ml-auto text-[10px] font-semibold uppercase tracking-wide text-zinc-400">
+                          Bloq.
+                        </span>
+                      </span>
+                    </li>
+                  )
+                }
+
+                return (
+                  <li key={item.path}>
+                    <NavLink
+                      to={item.path}
+                      onClick={onNavigate}
+                      className={({ isActive }) =>
+                        `flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-colors ${
+                          isActive
+                            ? 'bg-violet-100 text-violet-700'
+                            : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900'
+                        }`
+                      }
+                    >
+                      <NavIcon name={item.icon} />
+                      {item.label}
+                    </NavLink>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         ))}
@@ -66,10 +105,12 @@ function SidebarContent({ onNavigate, showCloseButton, onClose }) {
 }
 
 export default function Sidebar({ isMobileOpen, onClose }) {
+  const { isComplete: setupComplete } = useAcademySetup()
+
   return (
     <>
       <aside className="hidden lg:flex w-72 min-h-screen bg-white border-r border-zinc-200 flex-col shrink-0">
-        <SidebarContent />
+        <SidebarContent setupComplete={setupComplete} />
       </aside>
 
       {isMobileOpen && (
@@ -86,6 +127,7 @@ export default function Sidebar({ isMobileOpen, onClose }) {
               showCloseButton
               onClose={onClose}
               onNavigate={onClose}
+              setupComplete={setupComplete}
             />
           </aside>
         </div>

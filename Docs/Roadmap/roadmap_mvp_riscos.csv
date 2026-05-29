@@ -1,7 +1,9 @@
-Nome,Risco,Impacto,Prioridade,Mitigação,Fase afetada
-Integração WhatsApp complexa,Integração WhatsApp complexa,Atraso F3,Crítica,Decidir provedor na semana 1 de F3; fallback Meta Cloud API,F3 — WhatsApp & Campanhas
-n8n instável,n8n instável,Campanhas quebram,Crítica,Workflow mínimo v1; retry + logs; manual trigger backup,F3 — WhatsApp & Campanhas
-Schema incompleto,Schema incompleto,Retrabalho,Alta,Migrations incrementais; novas tabelas sempre com academy_id,Todas
-Frontend direct Supabase,Frontend direct Supabase,Segurança,Alta,Migrar operações sensíveis para FastAPI desde F0,F0 — Fundação
-Escopo IA cresce,Escopo IA cresce,Atraso F4,Alta,Prompt template fixo; perfil manual suficiente para launch,F4 — Chat IA
-Prazo 7 semanas apertado,Prazo 7 semanas apertado,MVP incompleto,Alta,Google Sheets e IA auto-perfil → pós-MVP; foco fluxo core,Todas
+Nome,Risco,Impacto,Prioridade,Status mitigação,Mitigação,Fase afetada,Observações
+Integração WhatsApp complexa,Integração WhatsApp complexa,Atraso F3,Crítica,Aberto,Decidir provedor na semana 1 de F3; fallback Meta Cloud API,F3 — WhatsApp & Campanhas,Sem ADR documentado ainda
+n8n instável,n8n instável,Campanhas quebram,Crítica,Aberto,Workflow mínimo v1; retry + logs; manual trigger backup,F3 — WhatsApp & Campanhas,—
+Schema incompleto,Schema incompleto,Retrabalho,Alta,Parcialmente mitigado,Migrations incrementais; novas tabelas sempre com academy_id,Todas,8 migrations aplicadas; faltam students/conversations/messages
+Frontend direct Supabase,Frontend direct Supabase,Segurança,Alta,Em curso,Migrar operações sensíveis para FastAPI desde F0,F0 — Fundação,Arquitetura atual: frontend→Supabase; roadmap previa FastAPI
+Escopo IA cresce,Escopo IA cresce,Atraso F4,Alta,Aberto,Prompt template fixo; perfil manual suficiente para launch,F4 — Chat IA,Edge Function analyze-academy-profile já criada
+Prazo 7 semanas apertado,Prazo 7 semanas apertado,MVP incompleto,Alta,Em curso,Google Sheets e IA auto-perfil → pós-MVP; foco fluxo core,Todas,F0-F2 adiantados; F3-F5 críticos no prazo
+Atraso backend FastAPI,Atraso backend FastAPI,Bloqueio F3-F5,Alta,Aberto,Priorizar scaffold F0 antes de 17/06; webhooks exigem backend,Todas,backend/ vazio em 28/05/2026
+Asset logo ausente,Asset logo ausente,Build quebrado em dev,Média,Aberto,Commitar logo.png ou placeholder em frontend/src/assets,F0 — Fundação,Imports em auth pages sem arquivo no repo

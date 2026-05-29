@@ -1,0 +1,64 @@
+# Evolution API v2 — stack local para desenvolvimento GapSelling (F3 WhatsApp)
+# Docs: https://doc.evolution-api.com/v2/en/install/docker
+
+services:
+  evolution-api:
+    container_name: gapselling_evolution_api
+    image: evoapicloud/evolution-api:v2.3.7
+    restart: unless-stopped
+    depends_on:
+      redis:
+        condition: service_started
+      evolution-postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - evolution_instances:/evolution/instances
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - evolution-net
+
+  redis:
+    container_name: gapselling_evolution_redis
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - evolution_redis:/data
+    networks:
+      evolution-net:
+        aliases:
+          - evolution-redis
+
+  evolution-postgres:
+    container_name: gapselling_evolution_postgres
+    image: postgres:15-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U evolution -d evolution"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - evolution-net
+
+volumes:
+  evolution_instances:
+  evolution_redis:
+  postgres_data:
+
+networks:
+  evolution-net:
+    driver: bridge

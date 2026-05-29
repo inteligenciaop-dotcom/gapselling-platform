@@ -16,6 +16,74 @@ const EMPTY_PROFILE = {
   description: '',
 }
 
+/** Campos obrigatórios antes de liberar CRM, leads, campanhas e IA. */
+export const ACADEMY_SETUP_CHECKLIST = [
+  {
+    key: 'phone',
+    label: 'WhatsApp da academia',
+    hint: 'Necessário para integração WhatsApp e campanhas.',
+    section: 'academy',
+  },
+  {
+    key: 'modalities',
+    label: 'Modalidades',
+    hint: 'A IA usa para responder sobre o que a academia oferece.',
+    section: 'profile',
+  },
+  {
+    key: 'plans',
+    label: 'Planos',
+    hint: 'Base para a IA explicar opções de matrícula.',
+    section: 'profile',
+  },
+  {
+    key: 'pricing',
+    label: 'Valores',
+    hint: 'Essencial para negociação automatizada.',
+    section: 'profile',
+  },
+  {
+    key: 'communication_tone',
+    label: 'Tom de comunicação',
+    hint: 'Define como a IA conversa com os leads.',
+    section: 'profile',
+  },
+]
+
+function hasValue(value) {
+  return Boolean(value?.trim())
+}
+
+export function evaluateAcademySetup({ academy, profile }) {
+  const normalizedProfile = normalizeProfile(profile)
+
+  const checks = ACADEMY_SETUP_CHECKLIST.map((item) => {
+    const source = item.section === 'academy' ? academy : normalizedProfile
+    const done = hasValue(source?.[item.key])
+
+    return {
+      ...item,
+      done,
+    }
+  })
+
+  const completedCount = checks.filter((item) => item.done).length
+  const totalCount = checks.length
+
+  return {
+    checks,
+    completedCount,
+    totalCount,
+    progressPercent: totalCount === 0 ? 100 : Math.round((completedCount / totalCount) * 100),
+    isComplete: completedCount === totalCount,
+  }
+}
+
+export async function fetchAcademySetupStatus(academyId) {
+  const { academy, profile } = await fetchAcademySettings(academyId)
+  return evaluateAcademySetup({ academy, profile })
+}
+
 function normalizeProfile(profile) {
   if (!profile) {
     return { ...EMPTY_PROFILE }

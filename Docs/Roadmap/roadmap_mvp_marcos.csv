@@ -1,7 +1,7 @@
-Nome,Data,Marco,Fase relacionada,Prioridade,Status,Entregável chave
-M0 — Fundação,2026-06-02,M0,F0 — Fundação,Crítica,Não iniciada,Backend + RLS + tenant bootstrap
-M1 — Academia viva,2026-06-09,M1,F1 — Academia & Dashboard,Crítica,Não iniciada,Perfil comercial + dashboard real
-M2 — Operação manual,2026-06-16,M2,F2 — Leads & CRM,Crítica,Não iniciada,Leads + CRM Kanban
-M3 — Automação core,2026-06-30,M3,F3 — WhatsApp & Campanhas,Crítica,Não iniciada,WhatsApp + campanha n8n funcionando
-M4 — IA operacional,2026-07-07,M4,F4 — Chat IA,Alta,Não iniciada,Chat IA + supervisão humana
-M5 — MVP Launch,2026-07-17,M5,F5 — Go-Live,Alta,Não iniciada,Fluxo completo + alunos + relatórios + produção
+Nome,Data,Marco,Fase relacionada,Prioridade,Status,% conclusão,Entregável chave,Observações
+M0 — Fundação,2026-06-02,M0,F0 — Fundação,Crítica,Concluída,100%,Backend + RLS + tenant bootstrap,FastAPI /me + AuthContext + RLS + onboarding RPC
+M1 — Academia viva,2026-06-09,M1,F1 — Academia & Dashboard,Crítica,Em andamento,60%,Perfil comercial + dashboard real,Perfil OK; dashboard métricas reais pendente
+M2 — Operação manual,2026-06-16,M2,F2 — Leads & CRM,Crítica,Em andamento,75%,Leads + CRM Kanban,Central de Leads + Kanban + import XLSX funcionais
+M3 — Automação core,2026-06-30,M3,F3 — WhatsApp & Campanhas,Crítica,Não iniciada,5%,WhatsApp + campanha n8n funcionando,Apenas schema DB
+M4 — IA operacional,2026-07-07,M4,F4 — Chat IA,Alta,Não iniciada,5%,Chat IA + supervisão humana,—
+M5 — MVP Launch,2026-07-17,M5,F5 — Go-Live,Alta,Não iniciada,10%,Fluxo completo + alunos + relatórios + produção,Frontend Vercel live; fluxo core incompleto

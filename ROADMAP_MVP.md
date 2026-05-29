@@ -2,7 +2,8 @@
 
 > **Período:** 27/05/2026 → 17/07/2026 (~7 semanas)
 > **Objetivo:** SaaS multi-tenant operacional — academia configura perfil, conecta WhatsApp, gerencia leads, dispara campanhas IA e converte matrículas.
-> **Estado atual:** Frontend auth + dashboard stub. Backend inexistente. Schema com 6 tabelas (`academies`, `profiles`, `leads`, `campaigns`, `whatsapp_instances`).
+> **Estado atual (28/05/2026):** **F0 concluída.** FastAPI com `GET /api/v1/me` + AuthContext integrado. Frontend operacional (auth, onboarding, leads, CRM). Schema com **7 tabelas** + RLS + 8 migrations.
+> **Progresso geral:** ~40% — F0 ✅; F1/F2 em andamento; F3–F5 não iniciadas.
 
 ---
 
@@ -10,12 +11,12 @@
 
 | Fase | Período | Foco | Prioridade | Status |
 |------|---------|------|------------|--------|
-| **F0 — Fundação** | 27/05 – 02/06 | Backend, multi-tenant, RLS, auth | 🔴 Crítica | ⬜ Não iniciada |
-| **F1 — Academia & Dashboard** | 03/06 – 09/06 | Configuração da academia + dashboard real | 🔴 Crítica | ⬜ Não iniciada |
-| **F2 — Leads & CRM** | 10/06 – 16/06 | Central de leads + Kanban comercial | 🔴 Crítica | ⬜ Não iniciada |
-| **F3 — WhatsApp & Campanhas** | 17/06 – 30/06 | Integração WhatsApp + campanhas + n8n | 🔴 Crítica | ⬜ Não iniciada |
-| **F4 — Chat IA & Conversão** | 01/07 – 07/07 | Supervisão humana + IA contextualizada | 🟠 Alta | ⬜ Não iniciada |
-| **F5 — Alunos, Relatórios & Go-Live** | 08/07 – 17/07 | Fechamento MVP + estabilização + deploy | 🟠 Alta | ⬜ Não iniciada |
+| **F0 — Fundação** | 27/05 – 02/06 | Backend, multi-tenant, RLS, auth | 🔴 Crítica | ✅ Concluída |
+| **F1 — Academia & Dashboard** | 03/06 – 09/06 | Configuração da academia + dashboard real | 🔴 Crítica | 🟡 Em andamento (60%) |
+| **F2 — Leads & CRM** | 10/06 – 16/06 | Central de leads + Kanban comercial | 🔴 Crítica | 🟡 Em andamento (75%) |
+| **F3 — WhatsApp & Campanhas** | 17/06 – 30/06 | Integração WhatsApp + campanhas + n8n | 🔴 Crítica | ⬜ Não iniciada (5%) |
+| **F4 — Chat IA & Conversão** | 01/07 – 07/07 | Supervisão humana + IA contextualizada | 🟠 Alta | ⬜ Não iniciada (5%) |
+| **F5 — Alunos, Relatórios & Go-Live** | 08/07 – 17/07 | Fechamento MVP + estabilização + deploy | 🟠 Alta | ⬜ Não iniciada (10%) |
 
 ---
 
@@ -42,17 +43,17 @@ Academia cria conta
 
 | # | Módulo | Fase | Schema atual | Entrega principal |
 |---|--------|------|--------------|-------------------|
-| 1 | Auth | F0 | `profiles` | Login, cadastro, reset senha, tenant bootstrap |
-| 2 | Multi-tenant | F0 | `academies`, `profiles.academy_id` | RLS + middleware FastAPI |
-| 3 | Configuração da Academia | F1 | `academies` (+ `academy_profiles` nova) | CRUD perfil comercial + tom IA |
-| 4 | Dashboard | F1 | agregações sobre tabelas existentes | Cards e listas com dados reais |
-| 5 | Central de Leads | F2 | `leads` | CRUD, tags, filtros, import XLSX |
-| 6 | CRM | F2 | `leads.stage` | Kanban com 8 etapas padrão |
-| 7 | WhatsApp | F3 | `whatsapp_instances` | Conexão, QR, status, envio/recebimento |
-| 8 | Campanhas | F3 | `campaigns` | Scripts IA, ativação, webhook n8n |
-| 9 | Chat IA | F4 | `conversations`, `messages` (novas) | Histórico, supervisão, takeover humano |
-| 10 | Alunos | F5 | `students` (nova) | Conversão lead → aluno |
-| 11 | Relatórios | F5 | views/queries | Export CSV/XLSX operacional |
+| 1 | Auth | F0 | `profiles` | ✅ Concluído — AuthContext + `/api/v1/me` |
+| 2 | Multi-tenant | F0 | `academies`, `profiles.academy_id` | ✅ Concluído — RLS + JWT middleware |
+| 3 | Configuração da Academia | F1 | `academies`, `academy_profiles` | 🟡 Em andamento (85%) — AcademySettings + storage logo |
+| 4 | Dashboard | F1 | agregações | 🟡 Em andamento (35%) — UI existe; métricas hardcoded |
+| 5 | Central de Leads | F2 | `leads` | 🟡 Em andamento (80%) — LeadsCenter + import XLSX |
+| 6 | CRM | F2 | `leads.stage` | 🟡 Em andamento (85%) — Kanban drag-and-drop |
+| 7 | WhatsApp | F3 | `whatsapp_instances` | ⬜ Não iniciada (5%) — schema apenas |
+| 8 | Campanhas | F3 | `campaigns` | ⬜ Não iniciada (5%) — rota placeholder |
+| 9 | Chat IA | F4 | `conversations`, `messages` | ⬜ Não iniciada |
+| 10 | Alunos | F5 | `students` | ⬜ Não iniciada |
+| 11 | Relatórios | F5 | views/queries | 🟡 Em andamento (25%) — relatório leads XLSX/PDF client-side |
 
 ---
 
@@ -64,15 +65,15 @@ Estabelecer a base técnica multi-tenant: backend FastAPI, schema versionado, RL
 
 ## Entregas
 
-- [ ] Repositório com pasta `backend/` estruturada (FastAPI modular)
-- [ ] Migrations Supabase versionadas em `supabase/migrations/`
-- [ ] Tabelas existentes com FKs e índices (`academy_id` NOT NULL)
-- [ ] RLS ativo em todas as tabelas tenant-scoped
-- [ ] Middleware JWT Supabase → resolução de `academy_id`
-- [ ] Endpoint `GET /api/v1/me` (user + academy context)
-- [ ] Fluxo register refatorado: criar `academies` + `profiles.academy_id`
-- [ ] `.env.example` (frontend + backend)
-- [ ] Cliente API no frontend (`lib/api.js`) — início da migração off direct Supabase
+- [x] Repositório com pasta `backend/` estruturada (FastAPI modular)
+- [x] Migrations Supabase versionadas em `supabase/migrations/` (8 arquivos)
+- [x] Tabelas com FKs e índices (`profiles.academy_id` nullable até onboarding — by design)
+- [x] RLS ativo em todas as tabelas tenant-scoped
+- [x] Middleware JWT Supabase → resolução de `academy_id`
+- [x] Endpoint `GET /api/v1/me` (user + academy context)
+- [x] Fluxo register/onboarding: Supabase Auth + RPC `create_academy_for_user`
+- [x] `.env.example` (frontend + backend)
+- [x] Cliente API no frontend (`services/api.js`) + AuthContext integrado
 
 ## Módulos
 
@@ -83,15 +84,15 @@ Estabelecer a base técnica multi-tenant: backend FastAPI, schema versionado, RL
 
 ## Tarefas técnicas
 
-- [ ] Scaffold FastAPI: `core/`, `api/v1/`, `services/`, `models/`
-- [ ] Migration: constraints FK `profiles.academy_id → academies.id`
-- [ ] Migration: constraints FK em `leads`, `campaigns`, `whatsapp_instances`
-- [ ] RLS policy helper: `get_user_academy_id()` via `auth.uid()`
-- [ ] Políticas RLS: SELECT/INSERT/UPDATE scoped por `academy_id`
-- [ ] Refatorar `Register.jsx`: POST backend cria academy + profile atomicamente
-- [ ] Hook `useAuth` + listener `onAuthStateChange`
-- [ ] Corrigir asset `logo.png` ou placeholder
-- [ ] README raiz com setup local
+- [x] Scaffold FastAPI: `core/`, `api/v1/`, `services/`, `models/`
+- [x] Migration: constraints FK `profiles.academy_id → academies.id`
+- [x] Migration: constraints FK em `leads`, `campaigns`, `whatsapp_instances`
+- [x] RLS policy helper: `get_user_academy_id()` via `auth.uid()`
+- [x] Políticas RLS: SELECT/INSERT/UPDATE scoped por `academy_id`
+- [x] Onboarding academia: `CreateAcademy.jsx` + RPC
+- [x] Hook `useAuth` + listener `onAuthStateChange` + `fetchMe()`
+- [x] Logo em `src/assets/logo.svg`
+- [x] README raiz + [Docs/F0_CHECKLIST.md](Docs/F0_CHECKLIST.md)
 
 ## Critério de conclusão
 ✅ Usuário se cadastra → academia criada → login → backend retorna contexto tenant → RLS impede acesso cross-tenant.
@@ -106,10 +107,10 @@ Permitir que cada academia configure seu perfil comercial (base da IA) e visuali
 
 ## Entregas
 
-- [ ] Migration: tabela `academy_profiles` (modalidades, planos, preços, diferenciais, tom_comunicacao)
-- [ ] API CRUD `/api/v1/academy` e `/api/v1/academy/profile`
-- [ ] Página **Configuração da Academia** no frontend
-- [ ] Layout app reutilizável (`AppLayout` com sidebar funcional)
+- [x] Migration: tabela `academy_profiles` + bucket `academy-logos`
+- [~] API CRUD academy/profile via `services/academy.js` (Supabase, não FastAPI)
+- [x] Página **Configuração da Academia** (`AcademySettings.jsx`)
+- [x] Layout app reutilizável (`AppLayout` com sidebar funcional)
 - [ ] Dashboard com métricas reais (leads hoje, conversões, campanhas ativas, status IA)
 - [ ] Listas: leads recentes, últimas interações (placeholder até F4 se necessário)
 
@@ -143,12 +144,12 @@ Operação comercial manual: cadastrar, importar, organizar leads e acompanhar p
 
 ## Entregas
 
-- [ ] API CRUD leads: `/api/v1/leads`
-- [ ] Página **Central de Leads** (lista, filtros, tags, status)
-- [ ] Importação XLSX básica (upload → parse → bulk insert)
-- [ ] Página **CRM Kanban** com 8 etapas padrão
-- [ ] Drag-and-drop ou select para mover `stage`
-- [ ] Filtros por tag, stage, source, campanha
+- [~] API CRUD leads via `services/leads.js` (Supabase)
+- [x] Página **Central de Leads** (`LeadsCenter.jsx`)
+- [x] Importação XLSX (`leadImport.js`)
+- [x] Página **CRM Kanban** com 8 etapas (`CrmKanban.jsx`)
+- [x] Drag-and-drop para mover `stage`
+- [~] Filtros: CRM completo; LeadsCenter só busca textual
 
 ## Módulos
 
@@ -302,12 +303,12 @@ Fechar fluxo lead→aluno, entregar relatórios básicos, estabilizar e publicar
 
 | Data | Milestone | Entregável chave |
 |------|-----------|------------------|
-| **02/06** | M0 — Fundação | Backend + RLS + tenant bootstrap |
-| **09/06** | M1 — Academia viva | Perfil comercial + dashboard real |
-| **16/06** | M2 — Operação manual | Leads + CRM Kanban |
-| **30/06** | M3 — Automação core | WhatsApp + campanha n8n funcionando |
-| **07/07** | M4 — IA operacional | Chat IA + supervisão humana |
-| **17/07** | **M5 — MVP Launch** | Fluxo completo + alunos + relatórios + produção |
+| **02/06** | M0 — Fundação | ✅ Backend + RLS + tenant bootstrap |
+| **09/06** | M1 — Academia viva | 🟡 Perfil comercial OK; dashboard real pendente |
+| **16/06** | M2 — Operação manual | 🟡 Leads + CRM Kanban funcionais |
+| **30/06** | M3 — Automação core | ⬜ WhatsApp + campanha n8n |
+| **07/07** | M4 — IA operacional | ⬜ Chat IA + supervisão humana |
+| **17/07** | **M5 — MVP Launch** | ⬜ Fluxo completo + produção |
 
 ---
 
@@ -346,9 +347,11 @@ Fechar fluxo lead→aluno, entregar relatórios básicos, estabilizar e publicar
 | Integração WhatsApp complexa | Atraso F3 | Decidir provedor na semana 1 de F3; fallback Meta Cloud API |
 | n8n instável | Campanhas quebram | Workflow mínimo v1; retry + logs; manual trigger backup |
 | Schema incompleto | Retrabalho | Migrations incrementais; novas tabelas sempre com `academy_id` |
-| Frontend direct Supabase | Segurança | Migrar operações sensíveis para FastAPI desde F0 |
-| Escopo IA cresce | Atraso F4 | Prompt template fixo; perfil manual suficiente para launch |
-| 7 semanas apertadas | MVP incompleto | Google Sheets e IA auto-perfil → pós-MVP; foco fluxo core |
+| Frontend direct Supabase | Segurança | **Em curso** — arquitetura atual; migrar para FastAPI |
+| Atraso backend FastAPI | Bloqueio F3–F5 | Priorizar scaffold F0 antes de 17/06 |
+| Asset logo ausente | Build dev | Commitar `logo.png` em `frontend/src/assets/` |
+| Escopo IA cresce | Atraso F4 | Edge Function `analyze-academy-profile` já criada |
+| 7 semanas apertadas | MVP incompleto | F0–F2 adiantados; F3–F5 críticos no prazo |
 
 ---
 
@@ -399,4 +402,16 @@ Fechar fluxo lead→aluno, entregar relatórios básicos, estabilizar e publicar
 ---
 
 *Gerado com base em `PROJECT_CONTEXT.md`, `DATABASE_SCHEMA.md` e análise do estado atual do repositório.*
-*Última atualização: 27/05/2026*
+## 📄 Relatório PDF
+
+Gerar relatório consolidado:
+
+```bash
+node Docs/Roadmap/scripts/generate-roadmap-report.mjs
+```
+
+Saída: `Docs/Roadmap/relatorio_roadmap_mvp_YYYY-MM-DD.pdf`
+
+---
+
+*Última atualização: 28/05/2026*

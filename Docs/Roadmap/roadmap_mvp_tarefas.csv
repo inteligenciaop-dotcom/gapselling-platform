@@ -1,78 +1,78 @@
-Nome,Tipo,Fase,Módulo,Prioridade,Data início,Data fim,Status,Camada,Descrição
-Scaffold FastAPI modular,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Não iniciada,Backend,"Estrutura backend/ com core/, api/v1/, services/, models/"
-Migrations Supabase versionadas,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Não iniciada,Database,Pasta supabase/migrations/ com schema versionado no Git
-FKs e índices academy_id NOT NULL,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Não iniciada,Database,Constraints FK em profiles leads campaigns whatsapp_instances
-RLS ativo em tabelas tenant-scoped,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Não iniciada,Database,Políticas SELECT/INSERT/UPDATE scoped por academy_id
-Helper get_user_academy_id() RLS,Tarefa técnica,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Não iniciada,Database,Função SQL auth.uid() → profiles.academy_id
-Middleware JWT → academy_id,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Não iniciada,Backend,Validar JWT Supabase e injetar contexto tenant em toda request
-Endpoint GET /api/v1/me,Entrega,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Não iniciada,Backend,Retornar user + academy context para frontend
-Register cria academies + profiles,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Não iniciada,Full-stack,POST backend cria academy + profile atomicamente; refatorar Register.jsx
-Cliente API frontend lib/api.js,Entrega,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Não iniciada,Frontend,Início migração off Supabase direct para FastAPI
-Hook useAuth + onAuthStateChange,Tarefa técnica,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Não iniciada,Frontend,Centralizar estado de sessão no frontend
-.env.example frontend + backend,Entrega,F0 — Fundação,Infra,Crítica,2026-05-27,2026-06-02,Não iniciada,Infra,Documentar variáveis VITE_* e backend
-README raiz setup local,Entrega,F0 — Fundação,Infra,Crítica,2026-05-27,2026-06-02,Não iniciada,Infra,Instruções dev local frontend + backend + Supabase
-Corrigir asset logo.png,Entrega,F0 — Fundação,Frontend,Alta,2026-05-27,2026-06-02,Não iniciada,Frontend,Adicionar logo ou placeholder para evitar falha de build
-Migration tabela academy_profiles,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Não iniciada,Database,"modalities plans pricing differentials communication_tone ai_context (jsonb/text)"
-API CRUD /api/v1/academy e /profile,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Não iniciada,Backend,Endpoints CRUD perfil comercial e dados institucionais
-Página Configuração da Academia,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Não iniciada,Frontend,Formulário manual perfil comercial + dados academia
-AppLayout com sidebar funcional,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Frontend,Layout reutilizável extraído do Dashboard com navegação
-Dashboard métricas reais,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Full-stack,Substituir hardcoded por /api/v1/dashboard/summary
-Listas leads recentes e interações,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Frontend,Leads recentes no dashboard; interações placeholder até F4
-Rotas /dashboard e /academy/settings,Tarefa técnica,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Frontend,Registrar rotas protegidas no React Router
-Stub endpoint IA perfil comercial,Tarefa técnica,F1 — Academia & Dashboard,Academia,Alta,2026-06-03,2026-06-09,Não iniciada,Backend,Opcional MVP — gerar perfil via website/descrição; pode ir para F4
-API CRUD /api/v1/leads,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Não iniciada,Backend,CRUD completo leads scoped por academy_id
-Página Central de Leads,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Não iniciada,Frontend,Lista filtros tags status paginação
-Importação XLSX bulk insert,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Não iniciada,Full-stack,POST /api/v1/leads/import upload parse insert
-Página CRM Kanban 8 etapas,Entrega,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Não iniciada,Frontend,Kanban: Novo Lead → Contato → Conversando → Interesse → Agendado → Negociação → Fechado | Perdido
-Mover stage drag-and-drop ou select,Entrega,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Não iniciada,Frontend,PATCH /api/v1/leads/{id}/stage
-Filtros tag stage source campanha,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Não iniciada,Frontend,Filtros combinados na central de leads e CRM
-Validação enum stage backend,Tarefa técnica,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Não iniciada,Backend,Constraint ou validação das 8 etapas CRM
-Import Google Sheets,Backlog,F2 — Leads & CRM,Leads,Média,2026-06-10,2026-06-16,Não iniciada,Full-stack,Pós-MVP se XLSX consumir tempo — priorizar XLSX
-Decisão provedor WhatsApp (ADR),Tarefa técnica,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Evolution API ou Meta Cloud API — documentar decisão
-Integração WhatsApp multi-tenant,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Conexão número por academia via whatsapp_instances
-API /api/v1/whatsapp connect status QR,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Connect disconnect status QR code
-UI conexão WhatsApp,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Tela conexão QR e status em Configuração da Academia
-whatsapp_service.py,Tarefa técnica,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Criar instância poll status enviar mensagem
-API CRUD /api/v1/campaigns,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,CRUD campanhas com ai_prompt tag active
-Página Campanhas,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Criar editar ativar/pausar escolher tag alvo
-Scripts IA pré-definidos + prompt custom,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Templates: venda agressiva visitas reativar matrícula follow-up
-Webhook n8n campaign-trigger,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,POST /api/v1/webhooks/n8n/campaign-trigger
-Webhook inbound WhatsApp,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,POST /api/v1/webhooks/whatsapp/inbound registrar mensagem
-Payload n8n com contexto tenant,Tarefa técnica,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Sempre incluir academy_id whatsapp_instance_id campaign_id lead_id
-Workflow n8n v1 exportado,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,n8n/workflows/campaign-start.json versionado
-Ativar campanha enfileirar leads por tag,Tarefa técnica,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Selecionar leads tag → disparo WhatsApp via n8n
-Status WhatsApp no dashboard,Entrega,F3 — WhatsApp & Campanhas,Dashboard,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Indicador conexão WhatsApp no dashboard
-Migration conversations e messages,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Database,Tabelas com academy_id lead_id whatsapp_instance_id
-ai_service.py OpenAI contextualizado,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Prompt com academy_profiles + campaigns.ai_prompt
-Fluxo inbound WhatsApp → IA → resposta,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Full-stack,Mensagem recebida → OpenAI → envio WhatsApp
-Página Chat IA,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Frontend,Lista conversas + thread mensagens
-Takeover supervisão humana,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Full-stack,POST reply + POST takeover operador assume conversa
-IA atualiza leads.stage automaticamente,Entrega,F4 — Chat IA,"Chat IA, CRM",Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Regras simples ex. agendado → stage Agendado
-Prompt template IA vendedor academia,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Identidade modalidades planos tom objetivo campanha
-Polling atualização chat MVP,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Frontend,Preferir polling vs Realtime no MVP
-Guardrails IA básicos,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Não expor preços não cadastrados fallback humano
-Geração auto perfil via IA website,Tarefa técnica,F4 — Chat IA,Academia,Média,2026-07-01,2026-07-07,Não iniciada,Backend,Se tempo — analisar website/descrição Instagram
-Migration tabela students,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Database,academy_id lead_id name phone email enrolled_at plan
-Fluxo conversão lead → aluno,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Full-stack,POST /api/v1/leads/{id}/convert stage Fechado → student
-Página Alunos,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Frontend,Lista alunos convertidos histórico básico
-Relatórios operacionais,Entrega,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,Leads campanhas conversões alunos conversas
-Export CSV/XLSX relatórios,Entrega,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,GET /api/v1/reports/{type}?format=csv|xlsx
-Smoke test E2E fluxo principal,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Teste manual fluxo completo conta → aluno
-Deploy backend DigitalOcean,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Infra,Dockerfile + DO App Platform ou Droplet
-Deploy frontend Vercel,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Infra,Produção gapselling-platform.vercel.app
-Runbook deploy e env vars,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Infra,Documentação operacional mínima
-CORS rate limiting logs estruturados,Tarefa técnica,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,Hardening backend produção
-Bug bash e correções críticas,Entrega,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Estabilização pré-launch 17/07
-Go-Live: cadastro academia + usuário,Go-Live,F5 — Go-Live,"Auth, Multi-tenant",Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional cadastro correto
-Go-Live: perfil comercial usado pela IA,Go-Live,F5 — Go-Live,Academia,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional perfil editável e consumido pela IA
-Go-Live: WhatsApp isolado por academia,Go-Live,F5 — Go-Live,WhatsApp,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional conexão multi-tenant
-Go-Live: campanha dispara tag correta,Go-Live,F5 — Go-Live,Campanhas,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional automação campanha
-Go-Live: IA responde com contexto academia,Go-Live,F5 — Go-Live,Chat IA,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional IA contextualizada
-Go-Live: supervisão e takeover humano,Go-Live,F5 — Go-Live,Chat IA,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional operador assume conversa
-Go-Live: CRM reflete stages,Go-Live,F5 — Go-Live,CRM,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional pipeline atualizado
-Go-Live: lead converte em aluno,Go-Live,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional conversão matrícula
-Go-Live: relatórios exportam CSV/XLSX,Go-Live,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional exportação
-Go-Live: RLS testado cross-tenant,Go-Live,F5 — Go-Live,Multi-tenant,Alta,2026-07-08,2026-07-17,Não iniciada,Database,Tenant A não vê dados tenant B
-Go-Live: webhooks autenticados,Go-Live,F5 — Go-Live,Integração,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,n8n e WhatsApp webhooks com auth
-Go-Live: 1 academia piloto onboarded,Go-Live,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Academia real operando no MVP
-Go-Live: fluxo demo documentado,Go-Live,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Gravação ou doc do fluxo completo
+Nome,Tipo,Fase,Módulo,Prioridade,Data início,Data fim,Status,Camada,Descrição,Observações
+Scaffold FastAPI modular,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Concluída,Backend,"Estrutura backend/ com core/, api/v1/, services/, models/",main.py + core + api/v1 + services + models
+Migrations Supabase versionadas,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Concluída,Database,Pasta supabase/migrations/ com schema versionado no Git,8 migrations (20260527120000–20007)
+FKs e índices academy_id NOT NULL,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Concluída,Database,Constraints FK em profiles leads campaigns whatsapp_instances,profiles.academy_id nullable até onboarding — decisão de schema OK
+RLS ativo em tabelas tenant-scoped,Entrega,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Concluída,Database,Políticas SELECT/INSERT/UPDATE scoped por academy_id,20260527120001_rls_policies.sql
+Helper get_user_academy_id() RLS,Tarefa técnica,F0 — Fundação,Multi-tenant,Crítica,2026-05-27,2026-06-02,Concluída,Database,Função SQL auth.uid() → profiles.academy_id,—
+Middleware JWT → academy_id,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Concluída,Backend,Validar JWT Supabase e injetar contexto tenant em toda request,core/security.py + Depends(get_current_user)
+Endpoint GET /api/v1/me,Entrega,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Concluída,Backend,Retornar user + academy context para frontend,GET /api/v1/me + tenant_ready
+Register cria academies + profiles,Tarefa técnica,F0 — Fundação,"Auth, Multi-tenant",Crítica,2026-05-27,2026-06-02,Concluída,Full-stack,POST backend cria academy + profile atomicamente; refatorar Register.jsx,Register Supabase Auth + ensureProfile + RPC create_academy_for_user
+Cliente API frontend lib/api.js,Entrega,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Concluída,Frontend,Início migração off Supabase direct para FastAPI,services/api.js (apiFetch + fetchMe); migração gradual pendente
+Hook useAuth + onAuthStateChange,Tarefa técnica,F0 — Fundação,Auth,Crítica,2026-05-27,2026-06-02,Concluída,Frontend,Centralizar estado de sessão no frontend,contexts/AuthContext.jsx
+.env.example frontend + backend,Entrega,F0 — Fundação,Infra,Crítica,2026-05-27,2026-06-02,Concluída,Infra,Documentar variáveis VITE_* e backend,—
+README raiz setup local,Entrega,F0 — Fundação,Infra,Crítica,2026-05-27,2026-06-02,Concluída,Infra,Instruções dev local frontend + backend + Supabase,README.md na raiz
+Corrigir asset logo.png,Entrega,F0 — Fundação,Frontend,Alta,2026-05-27,2026-06-02,Concluída,Frontend,Adicionar logo ou placeholder para evitar falha de build,logo.svg em src/assets/ (favicon)
+Migration tabela academy_profiles,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Concluída,Database,"modalities plans pricing differentials communication_tone ai_context (jsonb/text)",20260527120005 + storage academy-logos
+API CRUD /api/v1/academy e /profile,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Em andamento,Backend,Endpoints CRUD perfil comercial e dados institucionais,services/academy.js via Supabase (sem FastAPI)
+Página Configuração da Academia,Entrega,F1 — Academia & Dashboard,Academia,Crítica,2026-06-03,2026-06-09,Concluída,Frontend,Formulário manual perfil comercial + dados academia,AcademySettings.jsx
+AppLayout com sidebar funcional,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Concluída,Frontend,Layout reutilizável extraído do Dashboard com navegação,AppLayout.jsx + navigation.js
+Dashboard métricas reais,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Full-stack,Substituir hardcoded por /api/v1/dashboard/summary,Valores fixos em Dashboard.jsx
+Listas leads recentes e interações,Entrega,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Não iniciada,Frontend,Leads recentes no dashboard; interações placeholder até F4,Painel placeholder apenas
+Rotas /dashboard e /academy/settings,Tarefa técnica,F1 — Academia & Dashboard,Dashboard,Crítica,2026-06-03,2026-06-09,Concluída,Frontend,Registrar rotas protegidas no React Router,App.jsx
+Stub endpoint IA perfil comercial,Tarefa técnica,F1 — Academia & Dashboard,Academia,Alta,2026-06-03,2026-06-09,Em andamento,Backend,Opcional MVP — gerar perfil via website/descrição; pode ir para F4,Edge Function analyze-academy-profile; UI não conectada
+API CRUD /api/v1/leads,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Em andamento,Backend,CRUD completo leads scoped por academy_id,services/leads.js via Supabase
+Página Central de Leads,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Concluída,Frontend,Lista filtros tags status paginação,LeadsCenter.jsx
+Importação XLSX bulk insert,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Concluída,Full-stack,POST /api/v1/leads/import upload parse insert,leadImport.js chunked insert Supabase
+Página CRM Kanban 8 etapas,Entrega,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Concluída,Frontend,Kanban: Novo Lead → Contato → Conversando → Interesse → Agendado → Negociação → Fechado | Perdido,CrmKanban.jsx
+Mover stage drag-and-drop ou select,Entrega,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Concluída,Frontend,PATCH /api/v1/leads/{id}/stage,Drag-and-drop + update via Supabase
+Filtros tag stage source campanha,Entrega,F2 — Leads & CRM,Leads,Crítica,2026-06-10,2026-06-16,Em andamento,Frontend,Filtros combinados na central de leads e CRM,CRM com filtros; LeadsCenter só busca textual
+Validação enum stage backend,Tarefa técnica,F2 — Leads & CRM,CRM,Crítica,2026-06-10,2026-06-16,Em andamento,Backend,Constraint ou validação das 8 etapas CRM,isValidLeadStage() só no frontend
+Import Google Sheets,Backlog,F2 — Leads & CRM,Leads,Média,2026-06-10,2026-06-16,Backlog,Full-stack,Pós-MVP se XLSX consumir tempo — priorizar XLSX,—
+Decisão provedor WhatsApp (ADR),Tarefa técnica,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Evolution API ou Meta Cloud API — documentar decisão,—
+Integração WhatsApp multi-tenant,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Conexão número por academia via whatsapp_instances,—
+API /api/v1/whatsapp connect status QR,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Connect disconnect status QR code,—
+UI conexão WhatsApp,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Tela conexão QR e status em Configuração da Academia,/integracoes é placeholder
+whatsapp_service.py,Tarefa técnica,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Criar instância poll status enviar mensagem,—
+API CRUD /api/v1/campaigns,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,CRUD campanhas com ai_prompt tag active,—
+Página Campanhas,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Criar editar ativar/pausar escolher tag alvo,/campanhas placeholder
+Scripts IA pré-definidos + prompt custom,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Templates: venda agressiva visitas reativar matrícula follow-up,—
+Webhook n8n campaign-trigger,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,POST /api/v1/webhooks/n8n/campaign-trigger,—
+Webhook inbound WhatsApp,Entrega,F3 — WhatsApp & Campanhas,WhatsApp,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,POST /api/v1/webhooks/whatsapp/inbound registrar mensagem,—
+Payload n8n com contexto tenant,Tarefa técnica,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,Sempre incluir academy_id whatsapp_instance_id campaign_id lead_id,—
+Workflow n8n v1 exportado,Entrega,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Integração,n8n/workflows/campaign-start.json versionado,—
+Ativar campanha enfileirar leads por tag,Tarefa técnica,F3 — WhatsApp & Campanhas,Campanhas,Crítica,2026-06-17,2026-06-30,Não iniciada,Backend,Selecionar leads tag → disparo WhatsApp via n8n,—
+Status WhatsApp no dashboard,Entrega,F3 — WhatsApp & Campanhas,Dashboard,Crítica,2026-06-17,2026-06-30,Não iniciada,Frontend,Indicador conexão WhatsApp no dashboard,—
+Migration conversations e messages,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Database,Tabelas com academy_id lead_id whatsapp_instance_id,—
+ai_service.py OpenAI contextualizado,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Prompt com academy_profiles + campaigns.ai_prompt,—
+Fluxo inbound WhatsApp → IA → resposta,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Full-stack,Mensagem recebida → OpenAI → envio WhatsApp,—
+Página Chat IA,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Frontend,Lista conversas + thread mensagens,/chat-ia placeholder
+Takeover supervisão humana,Entrega,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Full-stack,POST reply + POST takeover operador assume conversa,—
+IA atualiza leads.stage automaticamente,Entrega,F4 — Chat IA,"Chat IA, CRM",Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Regras simples ex. agendado → stage Agendado,—
+Prompt template IA vendedor academia,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Identidade modalidades planos tom objetivo campanha,—
+Polling atualização chat MVP,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Frontend,Preferir polling vs Realtime no MVP,—
+Guardrails IA básicos,Tarefa técnica,F4 — Chat IA,Chat IA,Alta,2026-07-01,2026-07-07,Não iniciada,Backend,Não expor preços não cadastrados fallback humano,—
+Geração auto perfil via IA website,Tarefa técnica,F4 — Chat IA,Academia,Média,2026-07-01,2026-07-07,Em andamento,Backend,Se tempo — analisar website/descrição Instagram,Edge Function criada; não integrada à UI
+Migration tabela students,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Database,academy_id lead_id name phone email enrolled_at plan,—
+Fluxo conversão lead → aluno,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Full-stack,POST /api/v1/leads/{id}/convert stage Fechado → student,—
+Página Alunos,Entrega,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Frontend,Lista alunos convertidos histórico básico,/alunos placeholder
+Relatórios operacionais,Entrega,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,Leads campanhas conversões alunos conversas,—
+Export CSV/XLSX relatórios,Entrega,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Em andamento,Backend,GET /api/v1/reports/{type}?format=csv|xlsx,LeadsReport.jsx XLSX/PDF client-side (só leads)
+Smoke test E2E fluxo principal,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Teste manual fluxo completo conta → aluno,—
+Deploy backend DigitalOcean,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Infra,Dockerfile + DO App Platform ou Droplet,—
+Deploy frontend Vercel,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Em andamento,Infra,Produção gapselling-platform.vercel.app,vercel.json + dist/ existente
+Runbook deploy e env vars,Entrega,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Em andamento,Infra,Documentação operacional mínima,Parcial em README.md
+CORS rate limiting logs estruturados,Tarefa técnica,F5 — Go-Live,Infra,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,Hardening backend produção,—
+Bug bash e correções críticas,Entrega,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Estabilização pré-launch 17/07,—
+Go-Live: cadastro academia + usuário,Go-Live,F5 — Go-Live,"Auth, Multi-tenant",Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional cadastro correto,—
+Go-Live: perfil comercial usado pela IA,Go-Live,F5 — Go-Live,Academia,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional perfil editável e consumido pela IA,—
+Go-Live: WhatsApp isolado por academia,Go-Live,F5 — Go-Live,WhatsApp,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional conexão multi-tenant,—
+Go-Live: campanha dispara tag correta,Go-Live,F5 — Go-Live,Campanhas,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional automação campanha,—
+Go-Live: IA responde com contexto academia,Go-Live,F5 — Go-Live,Chat IA,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional IA contextualizada,—
+Go-Live: supervisão e takeover humano,Go-Live,F5 — Go-Live,Chat IA,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional operador assume conversa,—
+Go-Live: CRM reflete stages,Go-Live,F5 — Go-Live,CRM,Alta,2026-07-08,2026-07-17,Em andamento,Produto,Checklist funcional pipeline atualizado,Kanban funcional; depende fluxo WhatsApp/IA
+Go-Live: lead converte em aluno,Go-Live,F5 — Go-Live,Alunos,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Checklist funcional conversão matrícula,—
+Go-Live: relatórios exportam CSV/XLSX,Go-Live,F5 — Go-Live,Relatórios,Alta,2026-07-08,2026-07-17,Em andamento,Produto,Checklist funcional exportação,Só relatório de leads
+Go-Live: RLS testado cross-tenant,Go-Live,F5 — Go-Live,Multi-tenant,Alta,2026-07-08,2026-07-17,Em andamento,Database,Tenant A não vê dados tenant B,RLS implementado; teste formal pendente
+Go-Live: webhooks autenticados,Go-Live,F5 — Go-Live,Integração,Alta,2026-07-08,2026-07-17,Não iniciada,Backend,n8n e WhatsApp webhooks com auth,—
+Go-Live: 1 academia piloto onboarded,Go-Live,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Academia real operando no MVP,—
+Go-Live: fluxo demo documentado,Go-Live,F5 — Go-Live,Produto,Alta,2026-07-08,2026-07-17,Não iniciada,Produto,Gravação ou doc do fluxo completo,—

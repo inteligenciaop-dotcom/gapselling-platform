@@ -13,6 +13,7 @@ Migrations versionadas para schema multi-tenant e RLS.
 | `20260527120004_create_academy_rpc.sql` | Função atômica criar academia + vincular profile |
 | `20260527120005_academy_profiles_and_storage.sql` | Perfil comercial (`academy_profiles`) + bucket logos |
 | `20260527120006_academy_instagram_url.sql` | Coluna `instagram_url` em `academies` |
+| `20260528120000_enforce_tenant_rls.sql` | Força RLS + remove políticas permissivas (isolamento leads) |
 
 ## Como aplicar
 
@@ -34,6 +35,7 @@ supabase db push
 6. Execute `20260527120004_create_academy_rpc.sql`
 7. Execute `20260527120005_academy_profiles_and_storage.sql`
 8. Execute `20260527120006_academy_instagram_url.sql`
+9. Execute `20260528120000_enforce_tenant_rls.sql` (**obrigatório** se leads de outras academias aparecem no dashboard)
 
 ## Edge Function — leitura automática do perfil
 

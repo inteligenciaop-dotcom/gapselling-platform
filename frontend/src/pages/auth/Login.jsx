@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { supabase } from '../../services/supabase'
-import { getPostAuthPath, mapAuthError } from '../../services/auth'
+import { mapAuthError, resolvePostAuthPath } from '../../services/auth'
 import { useAuth } from '../../contexts/AuthContext'
 
 export default function Login() {
@@ -44,7 +44,8 @@ export default function Login() {
         return
       }
 
-      navigate(getPostAuthPath(profile))
+      const nextPath = await resolvePostAuthPath(profile)
+      navigate(nextPath)
     } catch {
       setMessage('Erro ao carregar perfil. Tente novamente.')
     }

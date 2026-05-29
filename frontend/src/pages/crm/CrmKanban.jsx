@@ -70,7 +70,7 @@ export default function CrmKanban() {
     setMessage('')
 
     try {
-      const data = await fetchLeads()
+      const data = await fetchLeads(profile.academy_id)
       setLeads(data)
     } catch (err) {
       setMessage(err.message ?? 'Erro ao carregar leads.')
@@ -117,7 +117,7 @@ export default function CrmKanban() {
     patchLeadInState({ ...lead, stage })
 
     try {
-      const updated = await updateLeadStage(leadId, stage)
+      const updated = await updateLeadStage(profile.academy_id, leadId, stage)
       patchLeadInState(updated)
       setMessage(`Lead movido para "${stage}".`)
       setIsError(false)
@@ -207,7 +207,7 @@ export default function CrmKanban() {
     setMessage('')
 
     try {
-      const updated = await updateLead(selectedLead.id, editForm)
+      const updated = await updateLead(profile.academy_id, selectedLead.id, editForm)
       patchLeadInState(updated)
       setSelectedLead(updated)
       setMessage('Lead atualizado.')

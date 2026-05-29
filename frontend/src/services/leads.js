@@ -16,10 +16,19 @@ export const LEAD_STAGES = [
 
 export const LEAD_STATUS_OPTIONS = ['Ativo', 'Inativo']
 
-export async function fetchLeads() {
+function assertAcademyId(academyId) {
+  if (!academyId) {
+    throw new Error('Academia não vinculada ao perfil.')
+  }
+}
+
+export async function fetchLeads(academyId) {
+  assertAcademyId(academyId)
+
   const { data, error } = await supabase
     .from('leads')
-    .select('id, name, email, phone, status, stage, source, tag, created_at')
+    .select('id, name, email, phone, status, stage, source, tag, whatsapp_opt_in, whatsapp_opt_in_at, created_at')
+    .eq('academy_id', academyId)
     .order('created_at', { ascending: false })
 
   if (error) {
@@ -45,6 +54,12 @@ function normalizeLeadPayload(academyId, lead) {
     stage: lead.stage?.trim() || DEFAULT_LEAD_STAGE,
     source: lead.source?.trim() || 'manual',
     tag: lead.tag?.trim() || null,
+    whatsapp_opt_in: Boolean(lead.whatsapp_opt_in),
+  }
+
+  if (lead.whatsapp_opt_in) {
+    payload.whatsapp_opt_in = true
+    payload.whatsapp_opt_in_at = localTimestampForDb()
   }
 
   if (lead.created_at) {
@@ -156,7 +171,7 @@ export async function createLead(academyId, lead) {
   const { data, error } = await supabase
     .from('leads')
     .insert(payload)
-    .select('id, name, email, phone, status, stage, source, tag, created_at')
+    .select('id, name, email, phone, status, stage, source, tag, whatsapp_opt_in, whatsapp_opt_in_at, created_at')
     .single()
 
   if (error) {
@@ -166,7 +181,9 @@ export async function createLead(academyId, lead) {
   return data
 }
 
-export async function updateLead(leadId, { status, stage, source, tag }) {
+export async function updateLead(academyId, leadId, { status, stage, source, tag, whatsapp_opt_in }) {
+  assertAcademyId(academyId)
+
   const { data, error } = await supabase
     .from('leads')
     .update({
@@ -174,9 +191,12 @@ export async function updateLead(leadId, { status, stage, source, tag }) {
       stage: stage?.trim() || DEFAULT_LEAD_STAGE,
       source: source?.trim() || null,
       tag: tag?.trim() || null,
+      whatsapp_opt_in: Boolean(whatsapp_opt_in),
+      whatsapp_opt_in_at: whatsapp_opt_in ? localTimestampForDb() : null,
     })
     .eq('id', leadId)
-    .select('id, name, email, phone, status, stage, source, tag, created_at')
+    .eq('academy_id', academyId)
+    .select('id, name, email, phone, status, stage, source, tag, whatsapp_opt_in, whatsapp_opt_in_at, created_at')
     .single()
 
   if (error) {
@@ -186,7 +206,9 @@ export async function updateLead(leadId, { status, stage, source, tag }) {
   return data
 }
 
-export async function updateLeadStage(leadId, stage) {
+export async function updateLeadStage(academyId, leadId, stage) {
+  assertAcademyId(academyId)
+
   const normalized = stage?.trim()
 
   if (!isValidLeadStage(normalized)) {
@@ -197,7 +219,8 @@ export async function updateLeadStage(leadId, stage) {
     .from('leads')
     .update({ stage: normalized })
     .eq('id', leadId)
-    .select('id, name, email, phone, status, stage, source, tag, created_at')
+    .eq('academy_id', academyId)
+    .select('id, name, email, phone, status, stage, source, tag, whatsapp_opt_in, whatsapp_opt_in_at, created_at')
     .single()
 
   if (error) {

@@ -39,6 +39,7 @@ const emptyEditForm = {
   stage: DEFAULT_LEAD_STAGE,
   source: '',
   tag: '',
+  whatsapp_opt_in: false,
 }
 
 export default function LeadsCenter() {
@@ -76,7 +77,7 @@ export default function LeadsCenter() {
     setMessage('')
 
     try {
-      const data = await fetchLeads()
+      const data = await fetchLeads(profile.academy_id)
       setLeads(data)
     } catch (err) {
       setMessage(err.message ?? 'Erro ao carregar leads.')
@@ -113,6 +114,7 @@ export default function LeadsCenter() {
       stage: lead.stage ?? DEFAULT_LEAD_STAGE,
       source: lead.source ?? '',
       tag: lead.tag ?? '',
+      whatsapp_opt_in: Boolean(lead.whatsapp_opt_in),
     })
     setShowEditModal(true)
   }
@@ -134,7 +136,7 @@ export default function LeadsCenter() {
     setSavingEdit(true)
 
     try {
-      await updateLead(selectedLead.id, editForm)
+      await updateLead(profile.academy_id, selectedLead.id, editForm)
       setShowEditModal(false)
       setSelectedLead(null)
       setEditForm(emptyEditForm)
@@ -376,6 +378,7 @@ export default function LeadsCenter() {
             setEditForm(emptyEditForm)
           }}
         >
+          <label className="flex items-center gap-2 text-sm mb-4"><input type="checkbox" name="whatsapp_opt_in" checked={editForm.whatsapp_opt_in} onChange={(e) => setEditForm({ ...editForm, whatsapp_opt_in: e.target.checked })} />Opt-in WhatsApp (campanhas)</label>
           <form onSubmit={handleUpdateLead} className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-zinc-700 mb-2">Nome</label>

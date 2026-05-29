@@ -30,7 +30,7 @@ export default function CreateAcademy() {
     }
 
     if (!loading && hasAcademy) {
-      navigate('/dashboard', { replace: true })
+      navigate('/onboarding/setup', { replace: true })
     }
   }, [loading, session, hasAcademy, navigate])
 
@@ -86,7 +86,7 @@ export default function CreateAcademy() {
       return
     }
 
-    navigate('/dashboard', { replace: true })
+    navigate('/onboarding/setup', { replace: true })
   }
 
   if (loading || hasAcademy) {

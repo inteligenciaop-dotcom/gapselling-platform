@@ -39,7 +39,7 @@ export default function LeadsReport() {
       setLoading(true)
 
       try {
-        const data = await fetchLeads()
+        const data = await fetchLeads(profile.academy_id)
         if (active) {
           setLeads(data)
         }

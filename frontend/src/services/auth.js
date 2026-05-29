@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { fetchAcademySetupStatus } from './academy'
 
 export async function fetchProfile(userId) {
   const { data: profile, error } = await supabase
@@ -31,6 +32,25 @@ export async function fetchProfile(userId) {
 export function getPostAuthPath(profile) {
   if (!profile?.academy_id) {
     return '/onboarding/academy'
+  }
+
+  return '/onboarding/setup'
+}
+
+export async function resolvePostAuthPath(profile) {
+  if (!profile?.academy_id) {
+    return '/onboarding/academy'
+  }
+
+  try {
+    const setupStatus = await fetchAcademySetupStatus(profile.academy_id)
+
+    if (!setupStatus.isComplete) {
+      return '/onboarding/setup'
+    }
+  } catch (err) {
+    console.warn('[Auth] Não foi possível verificar configuração da academia:', err.message)
+    return '/onboarding/setup'
   }
 
   return '/dashboard'
